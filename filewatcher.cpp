@@ -11,7 +11,8 @@
 FileWatcher::FileWatcher(std::function<void()> callback)
 : mCallback(callback)
 {
-
+    QObject::connect(&mWatcher, &QFileSystemWatcher::directoryChanged, this, &FileWatcher::directoryChanged);
+    QObject::connect(&mWatcher, &QFileSystemWatcher::fileChanged, this, &FileWatcher::fileChanged);
 }
 
 /**
@@ -24,6 +25,20 @@ void FileWatcher::setDirectory(const QString &path)
 {
     qDebug() << "setting directory to: " << path;
 
-    // @todo: remove. Testing the callback function
-    mCallback();
+    if (!mWatcher.addPath(path))
+    {
+        qWarning() << "Could not add path: " << path;
+    }
+
+    // @todo start timer
+}
+
+void FileWatcher::directoryChanged(const QString &path)
+{
+    qDebug() << "FileWatcher::directoryChanged: " << path;
+}
+
+void FileWatcher::fileChanged(const QString &path)
+{
+    qDebug() << "FileWatcher::fileChanged: " << path;
 }

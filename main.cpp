@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     view.show();
 
     FileWatcher watcher([](){ qDebug() << "executing callback function";});
-    watcher.setDirectory("some/directory/path");
+    watcher.setDirectory("D:/Dev/qt projects/test");
 
     return app.exec();
 }
