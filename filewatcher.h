@@ -5,6 +5,8 @@
 #include <QFileSystemWatcher>
 #include <QString>
 #include <QObject>
+#include <QDir>
+#include <QTimer>
 
 class FileWatcher : public QObject
 {
@@ -19,8 +21,13 @@ public slots:
     void fileChanged(const QString &path);
 
 private:
+    void addPaths();
+
+private:
     std::function<void()> mCallback;
     QFileSystemWatcher    mWatcher;
+    QDir                  mDir;
+    QTimer                mTimer;
 };
 
 #endif // FILEWATCHER_H
