@@ -1,5 +1,7 @@
-#include "filewatcher.h"
 #include <QDebug>
+#include <QString>
+
+#include "filewatcher.h"
 
 /**
  * @brief FileWatcher::FileWatcher
@@ -26,6 +28,10 @@ FileWatcher::FileWatcher(std::function<void()> callback)
     QObject::connect(&mTimer, &QTimer::timeout, mCallback);
 }
 
+/**
+ * @brief FileWatcher::addPaths
+ *   Adds the paths of the files to be monitored in the current directory
+ */
 void FileWatcher::addPaths()
 {
     QStringList entries = mDir.entryList();
@@ -57,12 +63,26 @@ void FileWatcher::setDirectory(const QString &path)
     }
 }
 
+/**
+ * @brief FileWatcher::directoryChanged
+ *   Slot connected to the directoryChanged signal from internal QFileSystemWatcher
+ * @param path
+ *   Path of the directory where the change was detected
+ */
 void FileWatcher::directoryChanged(const QString &path)
 {
+    Q_UNUSED(path);
     addPaths();
 }
 
+/**
+ * @brief FileWatcher::fileChanged
+ *   Slot connected to the fileChanged signal from internal QFileSystemWatcher
+ * @param path
+ *   Path of the file where the change was detected
+ */
 void FileWatcher::fileChanged(const QString &path)
 {
+    Q_UNUSED(path);
     mTimer.start();
 }

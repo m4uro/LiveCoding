@@ -3,10 +3,11 @@
 
 #include <functional>
 #include <QFileSystemWatcher>
-#include <QString>
 #include <QObject>
 #include <QDir>
 #include <QTimer>
+
+class QString;
 
 class FileWatcher : public QObject
 {
